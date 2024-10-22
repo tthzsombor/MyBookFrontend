@@ -1,0 +1,146 @@
+
+/*
+.body{
+  height: auto;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Jost", sans-serif;
+  background-color: #735DA5 ; 
+  background: linear-gradient(to bottom, #84ACB6 , #8784C7,  #8784C7 );
+}
+*/  
+
+
+
+
+.plx{
+  text-align: center;
+  margin-top: 150px;
+}
+
+
+.container {
+    text-align: center;
+    width: 1200px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../public/img/papir.jpg);
+    /*
+    background-image: url(https://images.unsplash.com/photo-1519120944692-1a8d8cfc107f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80);
+    */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+   
+  }
+  
+  h1 {
+    font-weight: 700;
+    font-size: 3rem;
+  }
+  
+  p {
+    max-width: 52ch;
+    line-height: 1.5;
+    padding: 1em;
+  }
+  
+  a {
+    display: inline-block;
+    padding: 1em 3.5em;
+    background-color: var(--color);
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 0.3em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+  }
+  
+  .blank,
+  .other {
+    width: 100%;
+    min-height: 60vh;
+    text-align: center;
+    margin-top: 100px;
+    width: 1000px;
+    margin-left: 100px;
+    
+    
+  }
+
+  
+  .second {
+    /*
+    background-image: url(https://images.unsplash.com/photo-1514496959998-c01c40915c5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80);
+    */
+    background-image: url(../public/img/konyv2.jpeg);
+    background-attachment: fixed;
+    height: 1000px;
+  }
+  
+  h3 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-top: 1em;
+  }
+
+  .card > a {
+    margin-bottom: 2em;
+  }
+  
+  .item {
+    display: flex;
+    max-width: 320px;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5em;
+    -webkit-box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
+    -moz-box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
+    box-shadow: 0px 29px 38px -15px rgba(0, 0, 0, 0.43);
+  }
+  
+  .img {
+    width: 90%;
+    height: 200px;
+    background-color: lightgrey;
+    background-size: cover;
+    background-position: center;
+    margin-top: 20px;
+    border-radius: 0.3em;
+  }
+  
+  .img-first {
+    background-image: url(../public/img/koncentracio.jpg);
+  }
+  
+  .img-second {
+    background-image: url(../public/img/fantazia.jpg);
+  }
+  
+  .img-third {
+    background-image: url(../public/img/szokincs.jpg);
+  }
+  
+  .second {
+    flex-direction: row;
+    gap: 1.6em;
+  }
+  
+  /*---------------------------------------------------------*/
+
+
+  
+  
+  
+  
+  

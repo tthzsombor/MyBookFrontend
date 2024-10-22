@@ -16,9 +16,8 @@ export function MainPage() {
 
         <div className='plx'>
           {/* Main container */}
-          <div className="container">
-            <h1>My Book</h1>
-            <h5>Saját online könyvtárad</h5>
+          <div style={{color: "white"}} className="container">
+            <h1 style={{fontSize: 100}}>My Book</h1>
           </div>
 
           {/* Blank section */}

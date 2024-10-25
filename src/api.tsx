@@ -100,7 +100,6 @@ adminLogin: async (email: string, password: string) => {
         headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`, // Add token to the header
         },
         body: JSON.stringify(loginData),
     });

@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { NavBar } from "../NavBar/Nav"; // Importing the NavBar component
-import './Admin.css' // Importing the CSS file for styling
+import React, { useState, useEffect, useContext } from "react";
+import { AdminNav } from "../Nav/AdminNav"; // Importing the NavBar component
+import { User } from "../../Profile/User";
+import { ApiContext } from "../../../api";
+import './Adminkonyvek.css'
 
 // Define the Book interface
 interface Book {
     id: number;           // Unique identifier for the book
     bookname: string;     // Name of the book
     genre: string;        // Genre of the book (if needed)
-    release: string;      // Release date of the book
+    release: number;      // Release date of the book
     writer: string;       // Author of the book
+}
+
+interface Props {
+    user: User
 }
 
 
 // AdminProfile component definition
-export function AdminProfile() {
+export function AdminKonyvek() {
+    const api = useContext(ApiContext)
+
     // State variables
     const [books, setBooks] = useState<Book[]>([]); // Array to store books
     const [newBook, setNewBook] = useState<Partial<Book>>({}); // New book object
     const [ujcim, setUjcim] = useState('');
-    const [ujkiadas, setUjkiadas] = useState('');
+    const [ujkiadas, setUjkiadas] = useState(Number);
     const [ujiro, setUjiro] = useState('');
     const [selectedBook, setSelectedBook] = useState<Book | null>(null); // Selected book for update
     const [errorMessage, setErrorMessage] = useState<string>(''); // Error message state
@@ -39,15 +47,20 @@ export function AdminProfile() {
 
     // Function to add a new book
     const addBook = async () => {
-        const data = [ujcim, ujiro, ujkiadas];
+        const bookData = {
+            bookname: ujcim,
+            writer: ujiro,
+            release: ujkiadas,
+            genre: 'defaultGenre' // Ha van műfaj, állítsd be itt.
+        };
         try {
-            const response = await fetch(`http://localhost:3000/books/${ujcim}`, {
+            const response = await fetch(`http://localhost:3000/books/Bookname`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(bookData), // Küldd el az objektumot
             });
             if (!response.ok) {
                 throw new Error('Failed to add book');
@@ -61,6 +74,13 @@ export function AdminProfile() {
 
     // Function to remove a book
     const removeBook = async (bookId: number) => {
+        // Megerősítés a törlés előtt
+        const confirmDelete = window.confirm('Biztosan törölni akarod ezt a könyvet?');
+    
+        if (!confirmDelete) {
+            return; // Ha a felhasználó nem erősíti meg, ne folytasd
+        }
+    
         try {
             const response = await fetch(`http://localhost:3000/books/${bookId}`, {
                 method: 'DELETE',
@@ -68,16 +88,18 @@ export function AdminProfile() {
             if (!response.ok) {
                 throw new Error('Failed to remove book');
             }
-            loadAllBooks(); // Refresh book list after removing a book
+            loadAllBooks(); // Frissítsd a könyvek listáját törlés után
         } catch (error) {
             console.error(error);
         }
     };
+    
 
     // Function to update a book
     const updateBook = async () => {
+        if (!selectedBook) return; // Ellenőrizd, hogy van kiválasztott könyv
         try {
-            const response = await fetch(`http://localhost:3000/books/${ujcim}`, {
+            const response = await fetch(`http://localhost:3000/books/${selectedBook.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,41 +123,42 @@ export function AdminProfile() {
 
     return (
         <div className="admin-container">
-            <NavBar /> {/* Render the NavBar component */}
+            <AdminNav user={api.currentUser!} /> {/* Render the NavBar component */}
             <div className="admin-content">
                 <div className="admin-section">
-                    <h2 className="admin-heading">Add Book</h2>
+                    <h2 className="admin-heading">Könyv hozzáadása</h2>
                     <div className="admin-inputs">
                         <input
                             type="text"
                             value={ujcim}
                             onChange={e => setUjcim(e.currentTarget.value)}
-                            placeholder="Title"
+                            placeholder="Cím"
                         />
                         <input
                             type="number"
                             value={ujkiadas}
-                            onChange={e => setUjkiadas(e.currentTarget.value)}
-                            placeholder="Release Year"
+                            onChange={e => setUjkiadas(parseInt(e.currentTarget.value))}
+                            placeholder="Kiadás éve"
                         />
                         <input
                             type="text"
                             value={ujiro}
                             onChange={e => setUjiro(e.currentTarget.value)}
-                            placeholder="Author"
+                            placeholder="Író"
                         />
-                        <button onClick={addBook} className="admin-button">Add Book</button>
+                        <button onClick={addBook} className="admin-button">Hozzáadás</button>
                     </div>
                 </div>
                 <div className="admin-section">
-                    <h2 className="admin-heading">Books</h2>
+                    <h2 className="admin-heading">Könyvek</h2>
                     <ul className="admin-book-list">
-                        {/* Render the list of books */}
                         {books.map((book) => (
                             <li key={book.id} className="admin-book-item">
                                 <span>{book.bookname} - {book.writer}</span>
-                                <button onClick={() => removeBook(book.id)} className="admin-remove-button">Remove</button>
-                                <button onClick={() => setSelectedBook(book)} className="admin-update-button">Update</button>
+                                <div className="admin-buttons"> {/* Új div a gombokhoz */}
+                                    <button onClick={() => removeBook(book.id)} className="admin-remove-button">Törlés</button>
+                                    <button onClick={() => setSelectedBook(book)} className="admin-update-button">Módosítás</button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -143,7 +166,7 @@ export function AdminProfile() {
                 {/* Render update section if a book is selected */}
                 {selectedBook && (
                     <div className="admin-section">
-                        <h2 className="admin-heading">Update Book</h2>
+                        <h2 className="admin-heading">Módosítás</h2>
                         <div className="admin-inputs">
                             <input
                                 type="text"
@@ -154,7 +177,7 @@ export function AdminProfile() {
                             <input
                                 type="number"
                                 value={selectedBook.release}
-                                onChange={(e) => setSelectedBook({ ...selectedBook, release: e.target.value })}
+                                onChange={(e) => setSelectedBook({ ...selectedBook, release: parseInt(e.target.value) })}
                                 placeholder="Release Year"
                             />
                             <input
@@ -163,7 +186,7 @@ export function AdminProfile() {
                                 onChange={(e) => setSelectedBook({ ...selectedBook, writer: e.target.value })}
                                 placeholder="Author"
                             />
-                            <button onClick={updateBook} className="admin-button">Update Book</button>
+                            <button onClick={updateBook} className="admin-button">Módosítás</button>
                         </div>
                     </div>
                 )}
@@ -172,4 +195,4 @@ export function AdminProfile() {
     );
 }
 
-export default AdminProfile;
+export default AdminKonyvek;

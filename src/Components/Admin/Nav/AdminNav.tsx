@@ -1,9 +1,8 @@
-import './ProfileNav.css'
-import '../User'
+import './AdminNav.css'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { ApiContext } from '../../../api'
-import { User } from '../User'
+import { User } from '../../Profile/User'
 
 
 //The user object containing information about the current user
@@ -31,7 +30,7 @@ function closeNav() {
 /**
  * This component represents the navigation sidebar within the user's profile. It provides links to different pages and allows users to toggle the sidebar to access navigation options
  */
-export function ProfileNav({ user }: Props) {
+export function AdminNav({ user }: Props) {
     const api = useContext(ApiContext)
 
     return <>
@@ -40,9 +39,9 @@ export function ProfileNav({ user }: Props) {
         <div id="mySidenav" className="sidenav"> {/* Sidebar container */}
             <h3 className='user'>{user.email}</h3> {/* Displaying the username of the current user */}
             <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a> {/*  Close button to close the sidebar */}
-            <Link className="fa fa-fw fa-home" to={'/fooldal'}>Főoldal</Link> {/* Navigation links to Főoldal pages of the application */}
-            <Link className="nav-link fa fa-fw fa-user" to={'/profil'}>Profil</Link> {/* Navigation links to Profil pages of the application */}
-            <Link className="nav-link fa fa-fw fa-search" to={'/kereses'}>Keresés</Link>{/* Navigation links to Keresés pages of the application */}
+            <Link className="nav-link fa fa-fw fa-user" to={'/admin/profilok'}>Profilok</Link> {/* Navigation links to Profil pages of the application */}
+            <Link className="nav-link fa fa-fw fa-book" to={'/admin/konyvek'}>Könyvek</Link>
+            {/* Navigation links to Keresés pages of the application */}
             <Link className='nav-link fa fa-fw fa-sign-out' to={'/login'} onClick={api.logout}>Kijelentkezés</Link> {/* Log out of the user's prifile */}
         </div>
         <div id="main"> {/* Main container with a toggle button (☰) to open the sidebar */}

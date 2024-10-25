@@ -1,0 +1,96 @@
+.admin-container {
+    display: flex;
+    height: 100vh; /* Teljes magasság */
+}
+
+.admin-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4; /* Világos háttér */
+    overflow-y: auto; /* Görgetés engedélyezése */
+}
+
+.admin-section {
+    background: #fff; /* Fehér háttér */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Árnyék */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-heading {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333; /* Sötét szöveg */
+}
+
+.admin-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-inputs input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Határ */
+    border-radius: 4px; /* Lekerekített sarkok */
+    font-size: 16px;
+}
+
+.admin-inputs input:focus {
+    border-color: #007bff; /* Kék határ fókuszban */
+    outline: none; /* Nincs keret fókuszban */
+}
+
+.admin-button, .admin-remove-button, .admin-update-button {
+    background-color: #007bff; /* Kék háttér */
+    color: white; /* Fehér szöveg */
+    border: none;
+    border-radius: 4px; /* Lekerekített sarkok */
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animáció */
+}
+
+.admin-button:hover, .admin-remove-button:hover, .admin-update-button:hover {
+    background-color: #0056b3; /* Sötétebb kék hover effekt */
+}
+
+.admin-book-list {
+    list-style-type: none; /* Lista jelek eltüntetése */
+    padding: 0; /* Nincs padding */
+}
+
+.admin-book-item {
+    display: flex;
+    justify-content: space-between; /* Támogatja a könyv nevét és a gombokat az ellentétes végén */
+    align-items: center; /* Középre igazítás */
+    padding: 10px;
+    border-bottom: 1px solid #eee; /* Alsó határ */
+}
+
+.admin-buttons {
+    margin-left: auto; /* Jobbra zárás a szülő elem belsejében */
+    display: flex; /* A gombok vízszintes elrendezése */
+    gap: 10px; /* Távolság a gombok között */
+}
+
+.admin-book-item:last-child {
+    border-bottom: none; /* Utolsó elem alsó határ eltávolítása */
+}
+
+.admin-remove-button {
+    background-color: #dc3545; /* Piros háttér */
+}
+
+.admin-remove-button:hover {
+    background-color: #c82333; /* Sötétebb piros hover effekt */
+}
+
+.admin-update-button {
+    background-color: #28a745; /* Zöld háttér */
+}
+
+.admin-update-button:hover {
+    background-color: #218838; /* Sötétebb zöld hover effekt */
+}

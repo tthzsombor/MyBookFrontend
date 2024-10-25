@@ -6,6 +6,7 @@ import { Book } from "./Components/Profile/Book";
 export const ApiContext = createContext({
     error: '',
     login: async (email: string, password: string) => { },
+    adminLogin: async (email: string, password: string) => { }, // Admin login function
     logout: () => { },
     register: async (email: string, username: string, password: string) => { },
     listAllBook: async () => ([] as Book[]),
@@ -26,8 +27,6 @@ export function ApiProvider({ children }: Props) {
     const [user, setUser] = useState(null as User | null);
     // State for error messages
     const [error, setError] = useState('');
-    // State for book data
-    const [book, setBook] = useState(null as Book | null);
 
     // Effect to load token from local storage on component mount
     useEffect(() => {
@@ -92,6 +91,27 @@ export function ApiProvider({ children }: Props) {
             setToken(tokenObj.token);
             localStorage.setItem('token', tokenObj.token);
         },
+        // Function for admin login
+adminLogin: async (email: string, password: string) => {
+    const loginData = { email, password };
+
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/adminlogin`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`, // Add token to the header
+        },
+        body: JSON.stringify(loginData),
+    });
+    if (!response.ok) {
+        const errorObj = await response.json();
+        throw new Error(errorObj.message);
+    }
+    const tokenObj = await response.json();
+    setToken(tokenObj.token);
+    localStorage.setItem('token', tokenObj.token);
+},
         // Function for user logout
         logout: () => {
             setToken('');

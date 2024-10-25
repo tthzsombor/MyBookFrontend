@@ -50,9 +50,12 @@ export function LoginForm() {
       setRUsername('');
       setREmail('');
       setRPass('');
+      window.alert("Sikeres regisztráció!"); // Displays a success alert upon successful registration
+      window.location.reload()
     }).catch((e: Error) => {
       // Sets the registration error message if registration fails
       setRegisterError(e.message);
+      window.alert(registerError)
     })
   }
 
@@ -62,16 +65,8 @@ export function LoginForm() {
       window.alert(loginError);
     }
   }
-
-  // Displays a registration success or error alert based on registerError
-  function AlertR() {
-    if (registerError) {
-      window.alert(registerError);
-    } else {
-      window.alert("Sikeres regisztráció!"); // Displays a success alert upon successful registration
-    }
-  }
-
+  
+    
   // Component JSX rendering
   return <>
     <div>
@@ -98,7 +93,7 @@ export function LoginForm() {
             <input id="input" type="text" placeholder="Email" value={remail} onChange={e => setREmail(e.currentTarget.value)} />
             <input id="input" type="text" placeholder="Username" value={rusername} onChange={e => setRUsername(e.currentTarget.value)} />
             <input id="input" type="password" placeholder="Password" value={rpass} onChange={e => setRPass(e.currentTarget.value)} />
-            <input id="button" type="submit" value='Sign Up' onClick={AlertR} />
+            <input id="button" type="submit" value='Sign Up' />
           </form>
         </div>
       </div>

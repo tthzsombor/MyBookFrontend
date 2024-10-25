@@ -20,7 +20,7 @@ export function AdminLogin() {
           setAdminname('');
           setAdminPass('');
         }).catch((e: Error) => {
-          // Sets the login error message if login fails
+          // Sets the login error message if login failsá
           setLoginError(e.message);
           window.alert(loginError)
         })

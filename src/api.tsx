@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { User } from "./Components/Profile/User";
 import { Book } from "./Components/Profile/Book";
+import { User } from "./Components/Profile/User"
 
 // Create a context for the API
 export const ApiContext = createContext({
@@ -58,6 +58,7 @@ export function ApiProvider({ children }: Props) {
             }
             const userData = await response.json() as User;
             setUser(userData);
+            
         }
 
         if (token) {
@@ -92,25 +93,25 @@ export function ApiProvider({ children }: Props) {
             localStorage.setItem('token', tokenObj.token);
         },
         // Function for admin login
-adminLogin: async (email: string, password: string) => {
-    const loginData = { email, password };
+        adminLogin: async (email: string, password: string) => {
+            const loginData = { email, password };
 
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/adminlogin`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/adminlogin`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+            });
+            if (!response.ok) {
+                const errorObj = await response.json();
+                throw new Error(errorObj.message);
+            }
+            const tokenObj = await response.json();
+            setToken(tokenObj.token);
+            localStorage.setItem('token', tokenObj.token);
         },
-        body: JSON.stringify(loginData),
-    });
-    if (!response.ok) {
-        const errorObj = await response.json();
-        throw new Error(errorObj.message);
-    }
-    const tokenObj = await response.json();
-    setToken(tokenObj.token);
-    localStorage.setItem('token', tokenObj.token);
-},
         // Function for user logout
         logout: () => {
             setToken('');

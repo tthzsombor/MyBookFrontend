@@ -14,7 +14,9 @@ function AdminProfilok() {
     const api = useContext(ApiContext);
     const [users, setUsers] = useState<User[]>([]);
     const [error, setError] = useState('');
-    const [userid, setUserid] = useState(0)
+    const [torlesid, setTorlesid] = useState(0)
+    const [sajatid, setSajatid] = useState(0)
+
 
     // Felhasználók betöltése
     async function loadAllUsers() {
@@ -32,11 +34,21 @@ function AdminProfilok() {
 
     // Felhasználó törlése
     const removeUser = async () => {
-        const confirmDelete = window.confirm('Biztosan törölni akarod ezt a felhasználót?');
-        if (!confirmDelete) return; // Ha a felhasználó nem erősíti meg, akkor kilép a függvényből.
+
+        if (torlesid == api.currentUser?.id) {
+            window.alert("Nem törölheted saját magad!")
+            return
+        }else if(torlesid != api.currentUser?.id){
+            const confirmDelete = window.confirm('Biztosan törölni akarod ezt a felhasználót?');
+            if (!confirmDelete) {
+                return; // Ha a felhasználó nem erősíti meg, akkor kilép a függvényből.
+            }
+        }
+
+       
 
         try {
-            const userIdToDelete = typeof userid === 'number' ? userid : parseInt(userid); // Ha nem int, akkor átkonvertálja az id-t
+            const userIdToDelete = typeof torlesid === 'number' ? torlesid : parseInt(torlesid); // Ha nem int, akkor átkonvertálja az id-t
             const response = await fetch(`http://localhost:3000/users/${userIdToDelete}`, {
                 method: 'DELETE',
             });
@@ -50,15 +62,16 @@ function AdminProfilok() {
         }
     };
 
-
-
-
-
-
-
     useEffect(() => {
         loadAllUsers(); // Felhasználók betöltése komponens betöltésekor
     }, []);
+
+
+    console.log("sajat id:", api.currentUser?.id);
+    console.log("sajat email:", api.currentUser?.email);
+
+
+
 
     return (<>
         <h1>Felhasználók</h1>
@@ -72,7 +85,7 @@ function AdminProfilok() {
                         <span className="user-info">
                             <strong>{user.username} ({user.role})</strong><br /> <span className="user-email">({user.email})</span>
                         </span>
-                        <button className="delete-button" onMouseEnter={() => setUserid(user.id)} onClick={removeUser}>Törlés</button>
+                        <button className="delete-button" onMouseEnter={() => setTorlesid(user.id)} onClick={removeUser}>Törlés</button>
                     </li>
                 ))}
             </ul>

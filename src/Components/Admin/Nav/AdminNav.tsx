@@ -42,7 +42,7 @@ export function AdminNav({ user }: Props) {
             <Link className="nav-link fa fa-fw fa-user" to={'/admin/profilok'}>Profilok</Link> {/* Navigation links to Profil pages of the application */}
             <Link className="nav-link fa fa-fw fa-book" to={'/admin/konyvek'}>Könyvek</Link>
             {/* Navigation links to Keresés pages of the application */}
-            <Link className='nav-link fa fa-fw fa-sign-out' to={'/login'} onClick={api.logout}>Kijelentkezés</Link> {/* Log out of the user's prifile */}
+            <Link className='nav-link fa fa-fw fa-sign-out' to={'/admin'} onClick={api.logout}>Kijelentkezés</Link> {/* Log out of the user's prifile */}
         </div>
         <div id="main"> {/* Main container with a toggle button (☰) to open the sidebar */}
             <span style={{ fontSize: 30, cursor: "pointer" }} onClick={openNav} onDoubleClickCapture={closeNav}>☰</span>

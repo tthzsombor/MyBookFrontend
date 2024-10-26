@@ -36,6 +36,7 @@ export function LoginForm() {
     }).catch((e: Error) => {
       // Sets the login error message if login fails
       setLoginError(e.message);
+      window.alert(loginError);
     })
   }
 
@@ -59,12 +60,7 @@ export function LoginForm() {
     })
   }
 
-  // Displays a login error alert if loginError is truthy
-  function AlertL() {
-    if (loginError) {
-      window.alert(loginError);
-    }
-  }
+ 
   
     
   // Component JSX rendering
@@ -79,7 +75,7 @@ export function LoginForm() {
             <label htmlFor="chk">Login</label>
             <input id="input" type="text" placeholder="Email" value={email} onChange={e => setEmail(e.currentTarget.value)} />
             <input id="input" type="password" placeholder="Password" value={pass} onChange={e => setPass(e.currentTarget.value)} />
-            <input id="button" type="submit" value='Login' onClick={AlertL} />
+            <input id="button" type="submit" value='Login'/>
           </form>
         </div>
 
